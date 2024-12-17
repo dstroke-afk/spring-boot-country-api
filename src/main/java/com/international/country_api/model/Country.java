@@ -1,24 +1,33 @@
 package com.international.country_api.model;
 
-import jakarta.persistence.*;
 import java.util.List;
 
+import jakarta.persistence.*;
+import lombok.Data;
+
 @Entity
+@Data  // Lombok will generate getters, setters, toString, equals, and hashCode methods.
 public class Country {
 
     @Id
+    @Column(name = "code")
     private String code;
 
+    @Column(nullable = false)
     private String name;
-    private String continent;
-    private String region;
-    private Long population;
 
-    @OneToMany(mappedBy = "country")
+    @Column(nullable = false)
+    private String continent;
+
+    @Column(nullable = false)
+    private String region;
+
+    @Column(nullable = false)
+    private Integer population;
+
+    @OneToMany(mappedBy = "country", fetch = FetchType.EAGER)
     private List<City> cities;
 
-    @OneToMany(mappedBy = "country")
-    private List<CountryLanguage> languages;
-
-    // Getters and Setters
+    @OneToMany(mappedBy = "country", fetch = FetchType.EAGER)
+    private List<CountryLanguage> countryLanguages;
 }
