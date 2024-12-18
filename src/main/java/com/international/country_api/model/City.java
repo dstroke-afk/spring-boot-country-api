@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 @Entity
-@Data  // Lombok will generate getters, setters, toString, equals, and hashCode methods.
+@Data
 public class City {
 
     @Id

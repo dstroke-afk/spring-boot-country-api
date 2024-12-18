@@ -1,12 +1,12 @@
 package com.international.country_api.model;
 
-import java.util.List;
-
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.List;
+
 @Entity
-@Data  // Lombok will generate getters, setters, toString, equals, and hashCode methods.
+@Data
 public class Country {
 
     @Id

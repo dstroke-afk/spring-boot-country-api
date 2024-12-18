@@ -1,8 +1,7 @@
 package com.international.country_api.repository;
 
+import com.international.country_api.model.Country;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.international.country_api.model.CountryLanguage;
-
-public interface CountryLanguageRepository extends JpaRepository<CountryLanguage, String> {
+public interface CountryRepository extends JpaRepository<Country, String> {
 }

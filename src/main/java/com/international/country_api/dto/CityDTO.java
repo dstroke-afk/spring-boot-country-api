@@ -7,5 +7,4 @@ public class CityDTO {
     private String name;
     private String district;
     private Integer population;
-
 }

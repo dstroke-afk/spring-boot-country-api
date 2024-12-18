@@ -1,8 +1,7 @@
 package com.international.country_api.dto;
 
-import java.util.List;
-
 import lombok.Data;
+import java.util.List;
 
 @Data
 public class CountryDTO {
@@ -13,6 +12,4 @@ public class CountryDTO {
     private Integer population;
     private List<CityDTO> cities;
     private List<LanguageDTO> countryLanguages;
-
 }
-

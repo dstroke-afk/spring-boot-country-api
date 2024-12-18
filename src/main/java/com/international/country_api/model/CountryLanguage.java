@@ -1,20 +1,15 @@
 package com.international.country_api.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
 import jakarta.persistence.*;
+import lombok.Data;
 
 @Entity
 @Table(name = "countrylanguage")
-@Data // Lombok annotation to generate getters, setters, toString, equals, and hashCode
-@NoArgsConstructor // Lombok annotation for default constructor
-@AllArgsConstructor // Lombok annotation for constructor with arguments
+@Data
 public class CountryLanguage {
 
     @EmbeddedId
-    private CountryLanguageId id; // Composite key class
+    private CountryLanguageId id;
 
     @Column(name = "IsOfficial")
     private String isOfficial;
@@ -25,15 +20,4 @@ public class CountryLanguage {
     @ManyToOne
     @JoinColumn(name = "CountryCode", insertable = false, updatable = false)
     private Country country;
-
-    // For completeness, if you need direct access to CountryCode and Language as individual fields
-    @Transient
-    public String getCountryCode() {
-        return id != null ? id.getCountryCode() : null;
-    }
-
-    @Transient
-    public String getLanguage() {
-        return id != null ? id.getLanguage() : null;
-    }
 }

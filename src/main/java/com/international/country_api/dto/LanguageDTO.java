@@ -7,5 +7,4 @@ public class LanguageDTO {
     private String language;
     private String isOfficial;
     private Double percentage;
-
 }

@@ -1,14 +1,14 @@
 package com.international.country_api.controller;
 
-import com.international.country_api.model.Country;
+import com.international.country_api.dto.CountryDTO;
 import com.international.country_api.service.CountryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 public class CountryController {
@@ -17,12 +17,14 @@ public class CountryController {
     private CountryService countryService;
 
     @GetMapping("/countries")
-    public List<Country> getAllCountries() {
+    public List<CountryDTO> getAllCountries() {
         return countryService.getAllCountries();
     }
 
     @GetMapping("/countries/{code}")
-    public Optional<Country> getCountryByCode(@PathVariable String code) {
-        return countryService.getCountryByCode(code);
+    public ResponseEntity<CountryDTO> getCountryByCode(@PathVariable String code) {
+        return countryService.getCountryByCode(code)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 }
