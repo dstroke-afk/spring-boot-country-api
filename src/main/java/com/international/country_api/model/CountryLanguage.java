@@ -16,7 +16,7 @@ public class CountryLanguage {
     @EmbeddedId
     private CountryLanguageId id; // Composite key class
 
-    @Column(name = "Is Official")
+    @Column(name = "IsOfficial")
     private String isOfficial;
 
     @Column(name = "Percentage")
