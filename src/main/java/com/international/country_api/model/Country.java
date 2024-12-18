@@ -25,9 +25,9 @@ public class Country {
     @Column(nullable = false)
     private Integer population;
 
-    @OneToMany(mappedBy = "country", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "country", fetch = FetchType.LAZY)
     private List<City> cities;
 
-    @OneToMany(mappedBy = "country", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "country", fetch = FetchType.LAZY)
     private List<CountryLanguage> countryLanguages;
 }
