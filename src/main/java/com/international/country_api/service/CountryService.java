@@ -3,11 +3,14 @@ package com.international.country_api.service;
 import com.international.country_api.dto.CityDTO;
 import com.international.country_api.dto.CountryDTO;
 import com.international.country_api.dto.LanguageDTO;
+import com.international.country_api.model.City;
 import com.international.country_api.model.Country;
+import com.international.country_api.model.CountryLanguage;
 import com.international.country_api.repository.CountryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,14 +21,22 @@ public class CountryService {
     private CountryRepository countryRepository;
 
     public List<CountryDTO> getAllCountries() {
-        return countryRepository.findAll().stream()
-                .map(this::convertToDTO)
-                .toList();
+        List<Country> countries = countryRepository.findAll();
+        List<CountryDTO> countryDTOs = new ArrayList<>();
+
+        for (Country country : countries) {
+            countryDTOs.add(convertToDTO(country));
+        }
+
+        return countryDTOs;
     }
 
     public Optional<CountryDTO> getCountryByCode(String code) {
-        return countryRepository.findById(code)
-                .map(this::convertToDTO);
+        Optional<Country> country = countryRepository.findById(code);
+        if (country.isPresent()) {
+            return Optional.of(convertToDTO(country.get()));
+        }
+        return Optional.empty();
     }
 
     private CountryDTO convertToDTO(Country country) {
@@ -36,25 +47,27 @@ public class CountryService {
         dto.setRegion(country.getRegion());
         dto.setPopulation(country.getPopulation());
 
-        // Convert cities to DTOs
-        dto.setCities(country.getCities().stream()
-                .map(city -> {
-                    CityDTO cityDTO = new CityDTO();
-                    cityDTO.setName(city.getName());
-                    cityDTO.setDistrict(city.getDistrict());
-                    cityDTO.setPopulation(city.getPopulation());
-                    return cityDTO;
-                }).toList());
+        // Convert cities to DTOs without lambda
+        List<CityDTO> cityDTOs = new ArrayList<>();
+        for (City city : country.getCities()) {
+            CityDTO cityDTO = new CityDTO();
+            cityDTO.setName(city.getName());
+            cityDTO.setDistrict(city.getDistrict());
+            cityDTO.setPopulation(city.getPopulation());
+            cityDTOs.add(cityDTO);
+        }
+        dto.setCities(cityDTOs);
 
-        // Convert languages to DTOs
-        dto.setCountryLanguages(country.getCountryLanguages().stream()
-                .map(language -> {
-                    LanguageDTO languageDTO = new LanguageDTO();
-                    languageDTO.setLanguage(language.getId().getLanguage());
-                    languageDTO.setIsOfficial(language.getIsOfficial());
-                    languageDTO.setPercentage(language.getPercentage());
-                    return languageDTO;
-                }).toList());
+        // Convert country languages to DTOs without lambda
+        List<LanguageDTO> languageDTOs = new ArrayList<>();
+        for (CountryLanguage language : country.getCountryLanguages()) {
+            LanguageDTO languageDTO = new LanguageDTO();
+            languageDTO.setLanguage(language.getId().getLanguage());
+            languageDTO.setIsOfficial(language.getIsOfficial());
+            languageDTO.setPercentage(language.getPercentage());
+            languageDTOs.add(languageDTO);
+        }
+        dto.setCountryLanguages(languageDTOs);
 
         return dto;
     }

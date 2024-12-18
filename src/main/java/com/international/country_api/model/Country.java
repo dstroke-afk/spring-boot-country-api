@@ -6,14 +6,13 @@ import lombok.Data;
 import java.util.List;
 
 @Entity
-@Data
 public class Country {
 
     @Id
     @Column(name = "code")
     private String code;
 
-    @Column(nullable = false)
+	@Column(nullable = false)
     private String name;
 
     @Column(nullable = false)
@@ -30,4 +29,61 @@ public class Country {
 
     @OneToMany(mappedBy = "country", fetch = FetchType.LAZY)
     private List<CountryLanguage> countryLanguages;
+    
+    public String getCode() {
+		return code;
+	}
+
+	public void setCode(String code) {
+		this.code = code;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getContinent() {
+		return continent;
+	}
+
+	public void setContinent(String continent) {
+		this.continent = continent;
+	}
+
+	public String getRegion() {
+		return region;
+	}
+
+	public void setRegion(String region) {
+		this.region = region;
+	}
+
+	public Integer getPopulation() {
+		return population;
+	}
+
+	public void setPopulation(Integer population) {
+		this.population = population;
+	}
+
+	public List<City> getCities() {
+		return cities;
+	}
+
+	public void setCities(List<City> cities) {
+		this.cities = cities;
+	}
+
+	public List<CountryLanguage> getCountryLanguages() {
+		return countryLanguages;
+	}
+
+	public void setCountryLanguages(List<CountryLanguage> countryLanguages) {
+		this.countryLanguages = countryLanguages;
+	}
+
 }
